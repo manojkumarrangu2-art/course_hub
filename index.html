@@ -1,0 +1,2351 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CourseHub — Modern University Course Registration & Student Management System. Seamlessly browse courses, register, track credits, manage timetables, and clear fees." />
+  <title>CourseHub | University Course Registration System</title>
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Toast Notification Stack -->
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- =========================================================================
+       SCREEN 1: STUDENT REGISTRATION PAGE (Default First Screen)
+       ========================================================================= -->
+  <section id="register-view" class="auth-page">
+    <div class="auth-container">
+      
+      <!-- Brand Header -->
+      <div class="auth-brand">
+        <div class="brand-logo-badge">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <h1>Course<span>Hub</span></h1>
+        <p>University Course Registration Portal • Create Student Account</p>
+      </div>
+
+      <!-- Registration Card -->
+      <div class="auth-card">
+        
+        <!-- Demo Helper Fill -->
+        <div class="auth-demo-badge">
+          <span>Testing? Pre-fill with a realistic student profile:</span>
+          <button type="button" id="btn-demo-fill-reg" class="btn-demo-fill">Fill Demo Data</button>
+        </div>
+
+        <div id="reg-alert-box" class="alert hidden" role="alert"></div>
+
+        <form id="registration-form" novalidate>
+          <div class="form-grid">
+            
+            <!-- Full Name -->
+            <div class="form-group col-span-2">
+              <label for="reg-fullname" class="form-label">Full Name</label>
+              <div class="input-with-icon">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <input type="text" id="reg-fullname" name="name" placeholder="e.g. Alex Vance" required minlength="3" />
+              </div>
+            </div>
+
+            <!-- Student ID / Roll No -->
+            <div class="form-group">
+              <label for="reg-rollno" class="form-label">Student ID / Roll No</label>
+              <div class="input-with-icon">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="18" height="14" x="3" y="5" rx="2"></rect>
+                  <circle cx="9" cy="12" r="2"></circle>
+                  <path d="M15 9h2"></path>
+                  <path d="M15 13h2"></path>
+                </svg>
+                <input type="text" id="reg-rollno" name="rollNo" placeholder="e.g. CS24B1042" required />
+              </div>
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group">
+              <label for="reg-email" class="form-label">Email Address</label>
+              <div class="input-with-icon">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+                <input type="email" id="reg-email" name="email" placeholder="student@university.edu" required />
+              </div>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+              <label for="reg-phone" class="form-label">Phone Number</label>
+              <div class="input-with-icon">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                <input type="tel" id="reg-phone" name="phone" placeholder="+91 98765 43210" required />
+              </div>
+            </div>
+
+            <!-- Department -->
+            <div class="form-group">
+              <label for="reg-dept" class="form-label">Department</label>
+              <div class="input-with-icon">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"></path>
+                  <path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"></path>
+                  <path d="M12 3v6"></path>
+                </svg>
+                <select id="reg-dept" name="department" required>
+                  <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                  <option value="AI & Data Science">AI & Data Science</option>
+                  <option value="Information Technology">Information Technology</option>
+                  <option value="Electronics & Communication">Electronics & Communication</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Academic Year -->
+            <div class="form-group">
+              <label for="reg-year" class="form-label">Academic Year</label>
+              <div class="input-with-icon">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                  <line x1="16" x2="16" y1="2" y2="6"></line>
+                  <line x1="8" x2="8" y1="2" y2="6"></line>
+                  <line x1="3" x2="21" y1="10" y2="10"></line>
+                </svg>
+                <select id="reg-year" name="year" required>
+                  <option value="1st Year">1st Year</option>
+                  <option value="2nd Year">2nd Year</option>
+                  <option value="3rd Year" selected>3rd Year</option>
+                  <option value="4th Year">4th Year</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Semester -->
+            <div class="form-group">
+              <label for="reg-semester" class="form-label">Semester</label>
+              <div class="input-with-icon">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+                </svg>
+                <select id="reg-semester" name="semester" required>
+                  <option value="1st Semester">1st Semester</option>
+                  <option value="2nd Semester">2nd Semester</option>
+                  <option value="3rd Semester">3rd Semester</option>
+                  <option value="4th Semester">4th Semester</option>
+                  <option value="5th Semester" selected>5th Semester (Odd)</option>
+                  <option value="6th Semester">6th Semester (Even)</option>
+                  <option value="7th Semester">7th Semester</option>
+                  <option value="8th Semester">8th Semester</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label for="reg-password" class="form-label">Password</label>
+              <div class="input-with-icon">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <input type="password" id="reg-password" name="password" placeholder="Create password" required minlength="6" />
+                <button type="button" class="password-toggle-btn" data-target="reg-password" aria-label="Toggle password visibility">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </button>
+              </div>
+              <span class="form-hint">Minimum 6 characters</span>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+              <label for="reg-confirm-password" class="form-label">Confirm Password</label>
+              <div class="input-with-icon">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <input type="password" id="reg-confirm-password" name="confirmPassword" placeholder="Confirm password" required />
+                <button type="button" class="password-toggle-btn" data-target="reg-confirm-password" aria-label="Toggle password visibility">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Submit Button -->
+          <div style="margin-top: 1.75rem;">
+            <button type="submit" id="btn-submit-registration" class="btn btn-primary btn-lg btn-full">
+              <span class="btn-text">Create Account & Proceed to Sign In</span>
+            </button>
+          </div>
+        </form>
+
+        <div class="auth-footer">
+          Already have an account? <a href="#" id="link-to-login">Sign In</a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       SCREEN 2: STUDENT LOGIN PAGE
+       ========================================================================= -->
+  <section id="login-view" class="auth-page hidden">
+    <div class="auth-container auth-narrow">
+      
+      <!-- Brand Header -->
+      <div class="auth-brand">
+        <div class="brand-logo-badge">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <h1>Welcome <span>Back!</span></h1>
+        <p>Sign in to continue to your student dashboard.</p>
+      </div>
+
+      <!-- Login Card -->
+      <div class="auth-card">
+        
+        <!-- Pre-fill test credentials -->
+        <div class="auth-demo-badge">
+          <div>
+            <strong>Demo Account:</strong> alex.vance@university.edu
+          </div>
+          <button type="button" id="btn-demo-fill-login" class="btn-demo-fill">One-Click Fill</button>
+        </div>
+
+        <div id="login-alert-box" class="alert hidden" role="alert"></div>
+
+        <form id="login-form" novalidate>
+          <div class="form-group" style="margin-bottom: 1.25rem;">
+            <label for="login-identifier" class="form-label">Student ID or Email</label>
+            <div class="input-with-icon">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+              <input type="text" id="login-identifier" placeholder="CS24B1042 or student@university.edu" required />
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.25rem;">
+            <label for="login-password" class="form-label">Password</label>
+            <div class="input-with-icon">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input type="password" id="login-password" placeholder="Enter your password" required />
+              <button type="button" class="password-toggle-btn" data-target="login-password" aria-label="Toggle password visibility">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-options" style="margin-bottom: 1.5rem;">
+            <label class="checkbox-label">
+              <input type="checkbox" id="login-remember" checked />
+              <span>Remember Me</span>
+            </label>
+            <a href="#" id="link-forgot-pass" style="font-size: 0.84rem; font-weight: 600;">Forgot Password?</a>
+          </div>
+
+          <button type="submit" id="btn-submit-login" class="btn btn-primary btn-lg btn-full">
+            <span class="btn-text">Sign In to Dashboard</span>
+          </button>
+        </form>
+
+        <div class="auth-footer">
+          Don't have an account? <a href="#" id="link-to-register">Register Now</a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       SCREEN 3: STUDENT DASHBOARD SHELL
+       ========================================================================= -->
+  <div id="dashboard-view" class="app-shell hidden">
+
+    <!-- LEFT SIDEBAR -->
+    <aside id="sidebar" class="sidebar">
+      
+      <!-- Sidebar Header / Brand -->
+      <div class="sidebar-header">
+        <div class="brand-container">
+          <div class="brand-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </div>
+          <div class="brand-title-wrap">
+            <div class="brand-title">Course<span>Hub</span></div>
+            <div class="brand-subtitle">University Portal</div>
+          </div>
+        </div>
+
+        <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" title="Toggle Sidebar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Sidebar Navigation Items -->
+      <div class="sidebar-content">
+        
+        <span class="sidebar-label">Academic Portal</span>
+
+        <button class="nav-item active" data-view="home" id="nav-home">
+          <span class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </span>
+          <span class="nav-text">Dashboard</span>
+        </button>
+
+        <button class="nav-item" data-view="browse" id="nav-browse">
+          <span class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+              <path d="M6 6h10"></path>
+              <path d="M6 10h10"></path>
+            </svg>
+          </span>
+          <span class="nav-text">Browse Courses</span>
+        </button>
+
+        <button class="nav-item" data-view="paths" id="nav-paths">
+          <span class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+              <line x1="9" y1="3" x2="9" y2="18"></line>
+              <line x1="15" y1="6" x2="15" y2="21"></line>
+            </svg>
+          </span>
+          <span class="nav-text">Learning Paths</span>
+          <span class="nav-badge" style="background: var(--accent-purple);">4 Tracks</span>
+        </button>
+
+        <button class="nav-item" data-view="registration" id="nav-registration">
+          <span class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+            </svg>
+          </span>
+          <span class="nav-text">Course Registration</span>
+          <span class="nav-badge" id="sidebar-reg-badge">New</span>
+        </button>
+
+        <button class="nav-item" data-view="my-courses" id="nav-my-courses">
+          <span class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </span>
+          <span class="nav-text">My Courses</span>
+          <span class="nav-badge" id="sidebar-enrolled-count">3</span>
+        </button>
+
+        <button class="nav-item" data-view="tests" id="nav-tests">
+          <span class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="6"/>
+              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+            </svg>
+          </span>
+          <span class="nav-text">Mock Tests & Certs</span>
+          <span class="nav-badge highlight" id="sidebar-certs-badge">Exam</span>
+        </button>
+
+        <button class="nav-item" data-view="timetable" id="nav-timetable">
+          <span class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+              <line x1="16" x2="16" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="2" y2="6"></line>
+              <line x1="3" x2="21" y1="10" y2="10"></line>
+            </svg>
+          </span>
+          <span class="nav-text">Timetable</span>
+        </button>
+
+        <span class="sidebar-label" style="margin-top: 0.5rem;">Finance & Records</span>
+
+        <button class="nav-item" data-view="payments" id="nav-payments">
+          <span class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+              <line x1="2" x2="22" y1="10" y2="10"></line>
+            </svg>
+          </span>
+          <span class="nav-text">Payments</span>
+        </button>
+
+        <button class="nav-item" data-view="history" id="nav-history">
+          <span class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </span>
+          <span class="nav-text">Payment History</span>
+        </button>
+
+        <button class="nav-item" data-view="notifications" id="nav-notifications">
+          <span class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+            </svg>
+          </span>
+          <span class="nav-text">Notifications</span>
+          <span class="nav-badge" id="sidebar-notif-count">2</span>
+        </button>
+
+        <span class="sidebar-label" style="margin-top: 0.5rem;">Account</span>
+
+        <button class="nav-item" data-view="profile" id="nav-profile">
+          <span class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="5"></circle>
+              <path d="M20 21a8 8 0 0 0-16 0"></path>
+            </svg>
+          </span>
+          <span class="nav-text">My Profile</span>
+        </button>
+
+        <button class="nav-item" data-view="settings" id="nav-settings">
+          <span class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </span>
+          <span class="nav-text">Settings</span>
+        </button>
+
+      </div>
+
+      <!-- Sidebar Footer / Logout -->
+      <div class="sidebar-footer">
+        <button id="btn-sidebar-logout" class="logout-btn">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="nav-text">Logout</span>
+        </button>
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN APPLICATION CONTENT WRAPPER -->
+    <div id="main-wrapper" class="main-wrapper">
+
+      <!-- Top Sticky Navigation Bar -->
+      <header class="top-header">
+        
+        <div class="header-left">
+          <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Open navigation drawer">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <!-- Global Course Search -->
+          <div class="search-container">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type="text" 
+              id="top-global-search" 
+              class="global-search-input" 
+              placeholder="Search courses, subjects, instructors..." 
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <div class="header-right">
+          
+          <!-- Theme Toggle -->
+          <button id="btn-theme-toggle" class="header-icon-btn" title="Toggle Light/Dark Theme">
+            <svg id="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+
+          <!-- Notifications Bell -->
+          <button id="top-notif-btn" class="header-icon-btn" title="Notifications">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+            </svg>
+            <span class="badge-dot" id="top-notif-dot"></span>
+          </button>
+
+          <!-- Student Profile Capsule -->
+          <div id="top-profile-capsule" class="user-profile-capsule" title="View Profile">
+            <img id="top-avatar-img" class="avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Student Profile" />
+            <div class="user-capsule-info">
+              <span id="top-student-name" class="user-capsule-name">Alex Vance</span>
+              <span id="top-student-id" class="user-capsule-id">CS24B1042</span>
+            </div>
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- MAIN CONTENT VIEWS SWITCHER -->
+      <main class="content-area">
+
+        <!-- =====================================================================
+             VIEW A: DASHBOARD HOME
+             ===================================================================== -->
+        <section id="view-home" class="view-section">
+          
+          <!-- Hero Banner -->
+          <div class="dashboard-hero">
+            <div class="hero-overlay-pattern"></div>
+            <div class="hero-content">
+              <div class="hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/>
+                </svg>
+                <span>Odd Semester 2024–2025 • Active Term</span>
+              </div>
+              <h2 class="hero-title">Welcome back, <span id="dash-student-name">Alex Vance</span>!</h2>
+              <p class="hero-desc">Manage your courses, registration and payments from one place. Course add/drop window closes in 3 days.</p>
+              <div class="hero-actions">
+                <button class="btn btn-hero-white" id="hero-btn-register">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 20h9"></path>
+                    <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+                  </svg>
+                  Register Courses Now
+                </button>
+                <button class="btn btn-hero-glass" id="hero-btn-pay">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                    <line x1="2" x2="22" y1="10" y2="10"></line>
+                  </svg>
+                  Clear Pending Fees
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5 Statistics Cards -->
+          <div class="stats-grid">
+            
+            <!-- 1. Registered Courses -->
+            <div class="stat-card">
+              <div class="stat-icon-wrap purple">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+                </svg>
+              </div>
+              <div class="stat-label">Registered Courses</div>
+              <div class="stat-number" id="stat-registered-count">8</div>
+              <div class="stat-subtext">
+                <span class="stat-indicator good">Active</span> Current Semester
+              </div>
+            </div>
+
+            <!-- 2. Total Credits -->
+            <div class="stat-card">
+              <div class="stat-icon-wrap blue">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 14 14"></polyline>
+                </svg>
+              </div>
+              <div class="stat-label">Total Credits</div>
+              <div class="stat-number" id="stat-total-credits">24</div>
+              <div class="stat-subtext">
+                Target: 20–26 Credits
+              </div>
+            </div>
+
+            <!-- 3. Completed Credits -->
+            <div class="stat-card">
+              <div class="stat-icon-wrap emerald">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <div class="stat-label">Completed Credits</div>
+              <div class="stat-number" id="stat-completed-credits">72</div>
+              <div class="stat-subtext">
+                <span class="stat-indicator good">45%</span> Of Degree Total
+              </div>
+            </div>
+
+            <!-- 4. Pending Fees -->
+            <div class="stat-card">
+              <div class="stat-icon-wrap amber">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                  <line x1="2" x2="22" y1="10" y2="10"></line>
+                </svg>
+              </div>
+              <div class="stat-label">Pending Fees</div>
+              <div class="stat-number" id="stat-pending-fees">₹4,500</div>
+              <div class="stat-subtext">
+                <span class="stat-indicator warn" id="stat-fee-status-badge">Due Soon</span>
+              </div>
+            </div>
+
+            <!-- 5. Attendance -->
+            <div class="stat-card">
+              <div class="stat-icon-wrap cyan">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <polyline points="16 11 18 13 22 9"></polyline>
+                </svg>
+              </div>
+              <div class="stat-label">Attendance</div>
+              <div class="stat-number" id="stat-attendance">92%</div>
+              <div class="stat-subtext">
+                <span class="stat-indicator good">Eligible</span> Above 75% Cutoff
+              </div>
+            </div>
+
+            <!-- 6. Certificates Earned -->
+            <div class="stat-card" style="cursor: pointer;" id="stat-card-certificates" onclick="app.switchDashboardTab('tests')" title="Click to view all earned certificates">
+              <div class="stat-icon-wrap" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="8" r="6"/>
+                  <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+                </svg>
+              </div>
+              <div class="stat-label">Certificates Earned</div>
+              <div class="stat-number" id="stat-certificates-count">1</div>
+              <div class="stat-subtext">
+                <span class="stat-indicator good">Verified</span> View Credentials →
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Dashboard Split Area: Schedule & Quick Actions -->
+          <div class="dashboard-split">
+            
+            <!-- Left: Today's Schedule -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                    <line x1="16" x2="16" y1="2" y2="6"></line>
+                    <line x1="8" x2="8" y1="2" y2="6"></line>
+                    <line x1="3" x2="21" y1="10" y2="10"></line>
+                  </svg>
+                  Today's Classes & Labs
+                </h3>
+                <a href="#" class="card-action-link" id="link-view-full-timetable">View Full Timetable →</a>
+              </div>
+
+              <div class="today-classes-list" id="today-classes-list">
+                <!-- Dynamically rendered -->
+              </div>
+            </div>
+
+            <!-- Right: Academic Summary & Quick Actions -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Quick Actions</h3>
+                </div>
+
+                <div class="quick-action-grid">
+                  <button class="quick-action-btn" id="qa-browse-btn">
+                    <div class="quick-icon purple">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+                      </svg>
+                    </div>
+                    <span class="quick-title">Explore Catalog</span>
+                    <span class="quick-desc">12+ Courses Available</span>
+                  </button>
+
+                  <button class="quick-action-btn" id="qa-tests-btn" onclick="app.switchDashboardTab('tests')">
+                    <div class="quick-icon" style="background: rgba(245, 158, 11, 0.15); color: #d97706;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="8" r="6"/>
+                        <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+                      </svg>
+                    </div>
+                    <span class="quick-title">Mock Tests & Certs</span>
+                    <span class="quick-desc">Take Test & Get Certified</span>
+                  </button>
+
+                  <button class="quick-action-btn" id="qa-receipt-btn">
+                    <div class="quick-icon emerald">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      </svg>
+                    </div>
+                    <span class="quick-title">Fee Receipts</span>
+                    <span class="quick-desc">Download Verified PDFs</span>
+                  </button>
+
+                  <button class="quick-action-btn" id="qa-profile-btn">
+                    <div class="quick-icon blue">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="8" r="5"></circle>
+                        <path d="M20 21a8 8 0 0 0-16 0"></path>
+                      </svg>
+                    </div>
+                    <span class="quick-title">Student Profile</span>
+                    <span class="quick-desc">Update Contact Info</span>
+                  </button>
+
+                  <button class="quick-action-btn" id="qa-advisor-btn">
+                    <div class="quick-icon amber">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/>
+                      </svg>
+                    </div>
+                    <span class="quick-title">Ask AI Copilot</span>
+                    <span class="quick-desc">Prerequisites & Credits</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Term Progress -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Degree Credit Progress</h3>
+                  <span style="font-weight: 700; color: var(--primary-600);">72 / 160</span>
+                </div>
+                <div class="progress-track" style="height: 10px; margin-bottom: 0.75rem;">
+                  <div class="progress-fill" style="width: 45%;"></div>
+                </div>
+                <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.4;">
+                  You have cleared 72 credits out of 160 required for Bachelor of Technology. Minimum 20 credits recommended this term.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =====================================================================
+             VIEW B: BROWSE COURSES (3-Column Modern Grid with Filter/Search)
+             ===================================================================== -->
+        <section id="view-browse" class="view-section hidden">
+          
+          <div class="page-header-wrap">
+            <h2 class="page-header-title">Browse University Courses</h2>
+            <p class="page-header-desc">Explore academic electives, core requirements, and laboratory certifications for Semester 5.</p>
+          </div>
+
+          <!-- Dynamic Search & Multi-Filter Bar -->
+          <div class="filter-card">
+            
+            <div class="filter-main-row">
+              <div class="filter-search-box">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input 
+                  type="text" 
+                  id="browse-search-input" 
+                  class="global-search-input" 
+                  placeholder="Search by course name, course code (e.g. AIML301), instructor or keywords..." 
+                />
+              </div>
+            </div>
+
+            <div class="filter-secondary-row">
+              
+              <!-- Department Filter -->
+              <select id="filter-dept" class="filter-select">
+                <option value="all">All Departments</option>
+                <option value="CSE">Computer Science & Eng</option>
+                <option value="AIML">AI & Data Science</option>
+                <option value="IT">Information Technology</option>
+                <option value="ECE">Electronics & Communication</option>
+              </select>
+
+              <!-- Course Type Filter -->
+              <select id="filter-type" class="filter-select">
+                <option value="all">All Types (Core & Elective)</option>
+                <option value="Core">Core Courses</option>
+                <option value="Elective">Elective Specializations</option>
+              </select>
+
+              <!-- Credits Filter -->
+              <select id="filter-credits" class="filter-select">
+                <option value="all">Any Credits</option>
+                <option value="3">3 Credits</option>
+                <option value="4">4 Credits</option>
+              </select>
+
+              <!-- Availability Filter -->
+              <select id="filter-availability" class="filter-select">
+                <option value="all">All Availability</option>
+                <option value="available">Seats Available (>10)</option>
+                <option value="filling-fast">Filling Fast (&lt;15)</option>
+              </select>
+
+              <!-- Sorting -->
+              <select id="filter-sort" class="filter-select" style="font-weight: 600;">
+                <option value="popularity">Sort by: Popularity</option>
+                <option value="name">Sort by: Course Name (A-Z)</option>
+                <option value="credits">Sort by: Credits (High-Low)</option>
+                <option value="seats">Sort by: Seats Available</option>
+              </select>
+
+              <div class="filter-counter-pill" id="courses-count-pill">Showing 9 courses</div>
+
+            </div>
+
+          </div>
+
+          <!-- 3-Column Courses Grid -->
+          <div class="courses-grid-3col" id="browse-courses-grid">
+            <!-- Dynamically populated from data.js -->
+          </div>
+
+        </section>
+
+
+        <!-- =====================================================================
+             VIEW: LEARNING PATHS & SPECIALIZATION ROADMAPS
+             ===================================================================== -->
+        <section id="view-paths" class="view-section hidden">
+          
+          <div class="page-header-wrap" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2 class="page-header-title">Academic Learning Paths & Roadmaps</h2>
+              <p class="page-header-desc">Guided curriculum pathways designed to master industry-demanded engineering specializations.</p>
+            </div>
+            <button class="btn btn-outline" id="btn-path-help-advisor">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              Recommend Track with AI
+            </button>
+          </div>
+
+          <!-- Learning Paths Container -->
+          <div class="learning-paths-grid" id="learning-paths-container">
+            <!-- Dynamically rendered -->
+          </div>
+
+        </section>
+
+
+        <!-- =====================================================================
+             VIEW C: COURSE REGISTRATION (Dedicated Interactive Interface)
+             ===================================================================== -->
+        <section id="view-registration" class="view-section hidden">
+          
+          <div class="page-header-wrap">
+            <h2 class="page-header-title">Semester Course Registration</h2>
+            <p class="page-header-desc">Select courses to build your academic load. Review prerequisites and verify total credits in the live summary.</p>
+          </div>
+
+          <div class="registration-layout">
+            
+            <!-- Left: Courses Selection List -->
+            <div class="reg-courses-list" id="reg-courses-list">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Right: Sticky Live Registration Summary -->
+            <div class="reg-summary-sticky">
+              
+              <div class="summary-title">
+                <span>Registration Summary</span>
+                <span class="status-badge registered" id="sum-badge-semester">Sem 5</span>
+              </div>
+
+              <!-- Credit Meter -->
+              <div class="credit-meter-box">
+                <div class="credit-meter-header">
+                  <span>Selected Credits</span>
+                  <span id="sum-credits-display"><strong>0</strong> / 26 Max</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" id="sum-credits-bar" style="width: 0%;"></div>
+                </div>
+                <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 0.4rem;" id="sum-credits-note">
+                  Min allowable: 16 credits • Recommended: 20-24 credits
+                </div>
+              </div>
+
+              <!-- Fee Breakdown -->
+              <div class="summary-fee-list">
+                <div class="summary-fee-row">
+                  <span>Selected Courses</span>
+                  <strong id="sum-courses-count">0</strong>
+                </div>
+                <div class="summary-fee-row">
+                  <span>Course Tuition Fees</span>
+                  <strong id="sum-course-fees">₹0</strong>
+                </div>
+                <div class="summary-fee-row">
+                  <span>Semester Registration Fee</span>
+                  <strong>₹500</strong>
+                </div>
+                <div class="summary-fee-row total-row">
+                  <span>Total Payable</span>
+                  <span style="color: var(--primary-600);" id="sum-total-amount">₹500</span>
+                </div>
+              </div>
+
+              <!-- Action Button -->
+              <button type="button" id="btn-confirm-registration-trigger" class="btn btn-primary btn-lg btn-full">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                Confirm Registration
+              </button>
+
+              <p style="font-size: 0.74rem; color: var(--text-light); text-align: center; margin-top: 0.85rem;">
+                Official academic registration governed by university statutes. Course seats are reserved upon confirmation.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =====================================================================
+             VIEW D: MY COURSES
+             ===================================================================== -->
+        <section id="view-my-courses" class="view-section hidden">
+          
+          <div class="page-header-wrap" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2 class="page-header-title">My Enrolled Courses</h2>
+              <p class="page-header-desc">Active subjects, faculty advisors, schedule details, and course progress for this semester.</p>
+            </div>
+            <button class="btn btn-outline" id="btn-print-courses-schedule">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect width="12" height="8" x="6" y="14"></rect>
+              </svg>
+              Print Course Schedule
+            </button>
+          </div>
+
+          <!-- Registered Courses Table -->
+          <div class="modern-table-container">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>Course</th>
+                  <th>Faculty / Instructor</th>
+                  <th>Credits</th>
+                  <th>Schedule</th>
+                  <th>Classroom</th>
+                  <th>Status & Grade</th>
+                  <th>Mock Assessment & Credential</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="my-courses-table-body">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+
+        </section>
+
+
+        <!-- =====================================================================
+             VIEW: MOCK TESTS & CERTIFICATIONS
+             ===================================================================== -->
+        <section id="view-tests" class="view-section hidden">
+          
+          <div class="page-header-wrap" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2 class="page-header-title">Academic Mock Tests & Official Certifications</h2>
+              <p class="page-header-desc">Take timed evaluations, benchmark your domain proficiency, and unlock verifiable CourseHub University credentials.</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+              <button class="btn btn-outline" id="btn-view-earned-certs" onclick="document.getElementById('tests-certificates-gallery-section').scrollIntoView({behavior:'smooth'})">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="8" r="6"/>
+                  <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+                </svg>
+                View Earned Certificates (<span id="tests-certs-count-badge">1</span>)
+              </button>
+            </div>
+          </div>
+
+          <!-- Top Stats Strip -->
+          <div class="stats-grid" style="margin-bottom: 2rem;">
+            <div class="stat-card">
+              <div class="stat-icon-wrap purple">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+              </div>
+              <div class="stat-label">Enrolled Subjects</div>
+              <div class="stat-number" id="tests-stat-enrolled">3</div>
+              <div class="stat-subtext"><span class="stat-indicator good">Active</span> Ready for Evaluation</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrap blue">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 11l3 3L22 4"></path>
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                </svg>
+              </div>
+              <div class="stat-label">Tests Completed</div>
+              <div class="stat-number" id="tests-stat-completed">1</div>
+              <div class="stat-subtext"><span class="stat-indicator good">Passed</span> ≥ 70% Cutoff</div>
+            </div>
+
+            <div class="stat-card" style="border: 1px solid rgba(245, 158, 11, 0.3); background: linear-gradient(135deg, var(--bg-surface) 0%, rgba(245, 158, 11, 0.04) 100%);">
+              <div class="stat-icon-wrap amber">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="8" r="6"/>
+                  <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+                </svg>
+              </div>
+              <div class="stat-label">Certificates Issued</div>
+              <div class="stat-number" id="tests-stat-certs">1</div>
+              <div class="stat-subtext"><span class="stat-indicator good">Official</span> Cryptographically Signed</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrap emerald">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </div>
+              <div class="stat-label">Average Score</div>
+              <div class="stat-number" id="tests-stat-avg-score">96%</div>
+              <div class="stat-subtext"><span class="stat-indicator good">Distinction</span> Grade A+</div>
+            </div>
+          </div>
+
+          <!-- Earned Certificates Showcase Section -->
+          <div class="card" id="tests-certificates-gallery-section" style="margin-bottom: 2rem;">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 class="card-title" style="display: flex; align-items: center; gap: 0.5rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+                  <circle cx="12" cy="8" r="6"/>
+                  <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+                </svg>
+                My Earned Certificates of Completion
+              </h3>
+              <span class="badge badge-emerald" id="tests-certs-header-count">1 Verified Credential</span>
+            </div>
+            <div id="tests-certificates-container" class="certificates-cards-grid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Mock Tests Catalog Section -->
+          <div class="card">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <h3 class="card-title">Available Course Examinations</h3>
+                <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">
+                  Each test contains 5 technical questions, 10-minute timer, and requires 70% to pass and unlock your official diploma.
+                </p>
+              </div>
+
+              <!-- Filter tabs -->
+              <div class="test-filter-tabs" id="test-filter-tabs">
+                <button type="button" class="btn btn-sm btn-primary test-filter-btn active" data-filter="all">All Tests</button>
+                <button type="button" class="btn btn-sm btn-outline test-filter-btn" data-filter="enrolled">My Enrolled</button>
+                <button type="button" class="btn btn-sm btn-outline test-filter-btn" data-filter="completed">Completed & Passed</button>
+              </div>
+            </div>
+
+            <!-- Tests Grid -->
+            <div id="mock-tests-cards-grid" class="mock-tests-grid" style="padding: 1.25rem;">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- =====================================================================
+             VIEW E: TIMETABLE
+
+             ===================================================================== -->
+        <section id="view-timetable" class="view-section hidden">
+          
+          <div class="page-header-wrap">
+            <h2 class="page-header-title">Weekly Class Timetable</h2>
+            <p class="page-header-desc">Weekly schedule for Odd Semester 2024–2025. Classes, lab practicals, and mentor hours.</p>
+          </div>
+
+          <!-- Timetable Controls & Day Filter -->
+          <div class="timetable-controls">
+            
+            <div class="day-pills-bar" id="timetable-day-filter">
+              <button class="day-pill-btn active" data-day="All">All Days</button>
+              <button class="day-pill-btn" data-day="Monday">Monday</button>
+              <button class="day-pill-btn" data-day="Tuesday">Tuesday</button>
+              <button class="day-pill-btn" data-day="Wednesday">Wednesday</button>
+              <button class="day-pill-btn" data-day="Thursday">Thursday</button>
+              <button class="day-pill-btn" data-day="Friday">Friday</button>
+              <button class="day-pill-btn" data-day="Saturday">Saturday</button>
+            </div>
+
+            <button class="btn btn-secondary" id="btn-print-timetable">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect width="12" height="8" x="6" y="14"></rect>
+              </svg>
+              Export Timetable
+            </button>
+
+          </div>
+
+          <!-- Visual Weekly Timetable Grid -->
+          <div class="timetable-grid-container" id="timetable-grid-wrapper">
+            <!-- Dynamically rendered -->
+          </div>
+
+        </section>
+
+
+        <!-- =====================================================================
+             VIEW F: PAYMENTS DASHBOARD
+             ===================================================================== -->
+        <section id="view-payments" class="view-section hidden">
+          
+          <div class="page-header-wrap">
+            <h2 class="page-header-title">Fee & Payment Dashboard</h2>
+            <p class="page-header-desc">Manage institutional dues, course registration charges, lab access fees, and payment receipts.</p>
+          </div>
+
+          <!-- 4 Financial Summary Cards -->
+          <div class="payment-summary-grid">
+            
+            <div class="stat-card">
+              <div class="stat-label">Total Semester Fees</div>
+              <div class="stat-number" id="pay-total-fees">₹25,000</div>
+              <div class="stat-subtext">Tuition & Lab Dues</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Amount Cleared / Paid</div>
+              <div class="stat-number" style="color: var(--accent-emerald);" id="pay-paid-amount">₹20,000</div>
+              <div class="stat-subtext">
+                <span class="stat-indicator good">Verified</span> Bank Settled
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Pending Institutional Due</div>
+              <div class="stat-number" style="color: var(--accent-amber);" id="pay-pending-amount">₹4,500</div>
+              <div class="stat-subtext">
+                <span class="stat-indicator warn">Due by 30th Sep</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Payment Clearance Status</div>
+              <div class="stat-number" style="font-size: 1.35rem;" id="pay-overall-status">
+                <span class="status-badge pending" id="pay-status-badge">Pending</span>
+              </div>
+              <div class="stat-subtext">Exam Hall Ticket Status</div>
+            </div>
+
+          </div>
+
+          <!-- Pending Fee Payment Card Banner -->
+          <div class="payment-due-card" id="payment-due-banner">
+            <div>
+              <div class="status-badge pending" style="margin-bottom: 0.5rem;">Immediate Action Required</div>
+              <h3 style="font-size: 1.4rem; margin-bottom: 0.35rem;">Semester 5 Elective Add-on & Lab Certification</h3>
+              <p style="color: var(--text-muted); font-size: 0.92rem;">
+                Pending fee invoice covering AIML301 Specialization Lab Fee & Online Resource Access.
+              </p>
+            </div>
+            <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem;">
+              <div class="due-amount-large" id="pay-banner-amount">₹4,500</div>
+              <button class="btn btn-primary btn-lg" id="btn-open-payment-modal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                  <line x1="2" x2="22" y1="10" y2="10"></line>
+                </svg>
+                Pay Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Fee Breakdown Table -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Fee Breakdown Schedule</h3>
+            </div>
+            <div class="modern-table-container">
+              <table class="modern-table">
+                <thead>
+                  <tr>
+                    <th>Fee Component</th>
+                    <th>Category</th>
+                    <th>Original Amount</th>
+                    <th>Scholarship / Waiver</th>
+                    <th>Net Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Academic Tuition Fee (Semester 5)</strong></td>
+                    <td>Core Academic</td>
+                    <td>₹18,000</td>
+                    <td>₹1,500 (Merit Waiver)</td>
+                    <td>₹16,500</td>
+                    <td><span class="status-badge paid">Paid</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Computer Lab & High-Performance Cluster Fee</strong></td>
+                    <td>Infrastructure</td>
+                    <td>₹3,000</td>
+                    <td>₹0</td>
+                    <td>₹3,000</td>
+                    <td><span class="status-badge paid">Paid</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Student Health Insurance & Welfare</strong></td>
+                    <td>Campus Services</td>
+                    <td>₹500</td>
+                    <td>₹0</td>
+                    <td>₹500</td>
+                    <td><span class="status-badge paid">Paid</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>AIML301 Lab Specialization & Cloud Sandbox</strong></td>
+                    <td>Elective Add-on</td>
+                    <td>₹3,500</td>
+                    <td>₹0</td>
+                    <td>₹3,500</td>
+                    <td><span class="status-badge pending" id="row-aiml-status">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>IEEE Digital Library & Research Access License</strong></td>
+                    <td>Digital Resources</td>
+                    <td>₹1,000</td>
+                    <td>₹0</td>
+                    <td>₹1,000</td>
+                    <td><span class="status-badge pending" id="row-lib-status">Pending</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- =====================================================================
+             VIEW G: PAYMENT HISTORY
+             ===================================================================== -->
+        <section id="view-history" class="view-section hidden">
+          
+          <div class="page-header-wrap">
+            <h2 class="page-header-title">Payment & Transaction History</h2>
+            <p class="page-header-desc">Complete ledger of fees, tuition payments, and verified downloadable university receipts.</p>
+          </div>
+
+          <!-- Filters -->
+          <div class="filter-card" style="padding: 1rem 1.5rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+              <input 
+                type="text" 
+                id="history-search-input" 
+                class="global-search-input" 
+                style="max-width: 320px;" 
+                placeholder="Search by Transaction ID..." 
+              />
+              <select id="history-filter-status" class="filter-select">
+                <option value="all">All Statuses</option>
+                <option value="Paid">Paid</option>
+                <option value="Pending">Pending</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- History Table -->
+          <div class="modern-table-container">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>Date & Time</th>
+                  <th>Description</th>
+                  <th>Amount</th>
+                  <th>Payment Method</th>
+                  <th>Status</th>
+                  <th>Receipt</th>
+                </tr>
+              </thead>
+              <tbody id="payment-history-table-body">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+
+        </section>
+
+
+        <!-- =====================================================================
+             VIEW H: NOTIFICATIONS
+             ===================================================================== -->
+        <section id="view-notifications" class="view-section hidden">
+          
+          <div class="page-header-wrap" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2 class="page-header-title">Notification Center</h2>
+              <p class="page-header-desc">University announcements, registration deadlines, and financial alerts.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="btn-mark-all-read">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Mark All as Read
+            </button>
+          </div>
+
+          <div class="notifications-feed" id="notifications-feed">
+            <!-- Dynamically populated -->
+          </div>
+
+        </section>
+
+
+        <!-- =====================================================================
+             VIEW I: STUDENT PROFILE
+             ===================================================================== -->
+        <section id="view-profile" class="view-section hidden">
+          
+          <div class="page-header-wrap">
+            <h2 class="page-header-title">Student Profile</h2>
+            <p class="page-header-desc">Official university student credentials, academic standing, and contact details.</p>
+          </div>
+
+          <div class="profile-layout">
+            
+            <!-- Left Card: Avatar & Summary -->
+            <div class="profile-card-main">
+              <img id="profile-card-avatar" class="profile-big-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Student Avatar" />
+              <h3 id="profile-card-name" style="font-size: 1.35rem; margin-bottom: 0.25rem;">Alex Vance</h3>
+              <p id="profile-card-dept" style="color: var(--primary-600); font-weight: 600; font-size: 0.88rem; margin-bottom: 1.25rem;">Computer Science & Engineering</p>
+              
+              <div style="display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+                <span class="status-badge registered" id="profile-card-year">3rd Year</span>
+                <span class="status-badge in-progress" id="profile-card-sem">5th Semester</span>
+              </div>
+
+              <button class="btn btn-outline btn-full" id="btn-edit-profile-trigger">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+                </svg>
+                Edit Profile Information
+              </button>
+            </div>
+
+            <!-- Right Card: Detailed Breakdown -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Academic & Contact Information</h3>
+              </div>
+
+              <div class="profile-detail-grid">
+                
+                <div class="form-group">
+                  <span class="form-hint">Student Roll Number</span>
+                  <strong id="prof-disp-rollno" style="font-size: 1.05rem;">CS24B1042</strong>
+                </div>
+
+                <div class="form-group">
+                  <span class="form-hint">System Student ID</span>
+                  <strong id="prof-disp-id" style="font-size: 1.05rem;">STU-2024-8842</strong>
+                </div>
+
+                <div class="form-group">
+                  <span class="form-hint">University Email</span>
+                  <strong id="prof-disp-email" style="font-size: 1.05rem;">alex.vance@university.edu</strong>
+                </div>
+
+                <div class="form-group">
+                  <span class="form-hint">Contact Phone</span>
+                  <strong id="prof-disp-phone" style="font-size: 1.05rem;">+91 98765 43210</strong>
+                </div>
+
+                <div class="form-group">
+                  <span class="form-hint">Cumulative GPA (CGPA)</span>
+                  <strong id="prof-disp-cgpa" style="font-size: 1.25rem; color: var(--accent-emerald);">8.92 / 10.0</strong>
+                </div>
+
+                <div class="form-group">
+                  <span class="form-hint">Faculty Advisor</span>
+                  <strong id="prof-disp-advisor" style="font-size: 1.05rem;">Dr. Arvind Subramanian</strong>
+                </div>
+
+                <div class="form-group col-span-2">
+                  <span class="form-hint">Affiliated College</span>
+                  <strong id="prof-disp-college" style="font-size: 1.05rem;">Institute of Technology & Advanced Science</strong>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Verified Certifications Portfolio Card -->
+            <div class="card" style="margin-top: 1.5rem;">
+              <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 class="card-title" style="display: flex; align-items: center; gap: 0.5rem;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+                    <circle cx="12" cy="8" r="6"/>
+                    <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+                  </svg>
+                  Verified Academic Certifications & Honors
+                </h3>
+                <button type="button" class="btn btn-sm btn-outline" onclick="app.switchDashboardTab('tests')">
+                  Take More Tests →
+                </button>
+              </div>
+              <div id="profile-certificates-list" class="profile-certs-container" style="padding: 1.25rem;">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =====================================================================
+             VIEW J: SETTINGS
+             ===================================================================== -->
+        <section id="view-settings" class="view-section hidden">
+          
+          <div class="page-header-wrap">
+            <h2 class="page-header-title">Platform Settings</h2>
+            <p class="page-header-desc">Customize portal appearance, email alerts, and security preferences.</p>
+          </div>
+
+          <div style="max-width: 720px;">
+            
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Appearance & Theme</h3>
+              </div>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+                Select your preferred visual mode for study sessions.
+              </p>
+              <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-secondary" id="btn-set-light-theme">☀️ Light Theme (Default)</button>
+                <button class="btn btn-secondary" id="btn-set-dark-theme">🌙 Dark Theme</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Account Security</h3>
+              </div>
+              <div class="form-group" style="margin-bottom: 1.25rem;">
+                <label class="form-label">Change Password</label>
+                <input type="password" placeholder="Current Password" style="margin-bottom: 0.75rem;" />
+                <input type="password" placeholder="New Password (min 6 characters)" style="margin-bottom: 0.75rem;" />
+                <input type="password" placeholder="Confirm New Password" />
+              </div>
+              <button class="btn btn-primary" id="btn-save-password">Update Password</button>
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================================
+       MODALS SYSTEM
+       ========================================================================= -->
+
+  <!-- 1. Course Details Modal -->
+  <div id="course-details-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width: 780px;">
+      <div class="modal-header" style="border-bottom: none; padding-bottom: 0.75rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span class="course-code-tag" id="modal-c-code">AIML301</span>
+          <h3 class="modal-title" id="modal-c-title">AI & Machine Learning</h3>
+        </div>
+        <button class="modal-close-btn" data-close="course-details-modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Tabs Header -->
+      <div class="modal-tab-nav" id="course-modal-tab-bar">
+        <button type="button" class="modal-tab-btn active" data-tab="overview">Overview & Syllabus</button>
+        <button type="button" class="modal-tab-btn" data-tab="path">Learning Path Position</button>
+        <button type="button" class="modal-tab-btn" data-tab="reviews">Student Reviews (<span id="modal-c-review-count">142</span>)</button>
+      </div>
+
+      <div class="modal-body" id="modal-c-body">
+        <!-- Dynamically rendered according to active tab -->
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close="course-details-modal">Close</button>
+        <button type="button" class="btn btn-outline" id="btn-modal-open-write-review">
+          ⭐ Write a Review
+        </button>
+        <button type="button" class="btn btn-primary" id="modal-c-register-action">Register This Course</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 2. Confirm Course Registration Modal -->
+  <div id="confirm-reg-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Confirm Academic Registration</h3>
+        <button class="modal-close-btn" data-close="confirm-reg-modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" id="confirm-reg-body">
+        <!-- Dynamically rendered breakdown -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-close="confirm-reg-modal">Cancel</button>
+        <button class="btn btn-primary" id="btn-execute-confirm-registration">Agree & Finalize Registration</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 3. Interactive Payment Gateway Modal -->
+  <div id="payment-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">University Fee Checkout</h3>
+        <button class="modal-close-btn" data-close="payment-modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        
+        <div style="background: var(--primary-50); border: 1px solid var(--primary-200); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 0.8rem; color: var(--primary-700); font-weight: 600;">AMOUNT PAYABLE</div>
+            <div style="font-size: 1.65rem; font-weight: 800; color: var(--primary-900);" id="modal-pay-amount-display">₹4,500</div>
+          </div>
+          <div style="text-align: right; font-size: 0.8rem; color: var(--text-muted);">
+            <div>Invoice Ref: <strong>INV-2024-SEM5</strong></div>
+            <div>Secure 256-bit SSL</div>
+          </div>
+        </div>
+
+        <!-- Payment Method Tabs -->
+        <div class="pay-methods-tabs">
+          <button type="button" class="pay-tab-btn active" data-method="upi">UPI / QR Code</button>
+          <button type="button" class="pay-tab-btn" data-method="card">Debit / Credit Card</button>
+          <button type="button" class="pay-tab-btn" data-method="netbanking">Net Banking</button>
+        </div>
+
+        <!-- Tab 1: UPI Content -->
+        <div id="pay-content-upi" class="pay-tab-content">
+          <div style="text-align: center; padding: 1rem;">
+            <!-- Simulated QR Code -->
+            <div style="width: 140px; height: 140px; margin: 0 auto 1rem auto; background: #ffffff; border: 2px solid #0f172a; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); position: relative;">
+              <svg width="110" height="110" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="1.5">
+                <rect width="5" height="5" x="3" y="3" rx="1"></rect>
+                <rect width="5" height="5" x="16" y="3" rx="1"></rect>
+                <rect width="5" height="5" x="3" y="16" rx="1"></rect>
+                <path d="M21 16h-3a2 2 0 0 0-2 2v3"></path>
+                <path d="M21 21v.01"></path>
+                <path d="M12 7v3a2 2 0 0 1-2 2H7"></path>
+                <path d="M3 12h.01"></path>
+                <path d="M12 3h.01"></path>
+                <path d="M12 16v.01"></path>
+                <path d="M16 12h1"></path>
+                <path d="M21 12v.01"></path>
+                <path d="M12 21v-1"></path>
+              </svg>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Scan using any UPI App (Google Pay, PhonePe, Paytm, BHIM)
+            </p>
+            <div class="form-group" style="max-width: 320px; margin: 0 auto;">
+              <input type="text" id="pay-upi-id" placeholder="Or enter your UPI ID (e.g. name@okhdfcbank)" value="student@okaxis" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Card Content -->
+        <div id="pay-content-card" class="pay-tab-content hidden">
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">Card Number</label>
+            <input type="text" placeholder="4111 2222 3333 4444" value="4111 2222 3333 4444" />
+          </div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Expiry Date</label>
+              <input type="text" placeholder="MM/YY" value="08/28" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">CVV</label>
+              <input type="password" placeholder="123" value="123" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Net Banking Content -->
+        <div id="pay-content-netbanking" class="pay-tab-content hidden">
+          <div class="form-group">
+            <label class="form-label">Select Your Bank</label>
+            <select style="width: 100%; padding: 0.75rem;">
+              <option>HDFC Bank</option>
+              <option>State Bank of India (SBI)</option>
+              <option>ICICI Bank</option>
+              <option>Axis Bank</option>
+              <option>Kotak Mahindra Bank</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-close="payment-modal">Cancel</button>
+        <button class="btn btn-primary btn-lg" id="btn-submit-payment">
+          <span class="btn-text">Proceed to Pay ₹4,500</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- 4. Payment Success Modal -->
+  <div id="payment-success-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width: 520px;">
+      <div class="payment-success-content">
+        <div class="success-check-circle">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 0.35rem;">Payment Successful ✓</h2>
+        <p style="color: var(--text-muted); font-size: 0.92rem;">
+          Your semester course fee transaction has been confirmed and verified.
+        </p>
+
+        <!-- Receipt Summary Box -->
+        <div class="receipt-meta-box">
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: var(--text-muted);">Transaction ID:</span>
+            <strong id="suc-txn-id">TXN-2024-99120</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: var(--text-muted);">Date & Time:</span>
+            <span id="suc-date">20 Sep 2024, 09:10 PM</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: var(--text-muted);">Amount Paid:</span>
+            <strong style="color: var(--accent-emerald);" id="suc-amount">₹4,500</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: var(--text-muted);">Payment Method:</span>
+            <span id="suc-method">UPI - Google Pay</span>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.85rem; justify-content: center; margin-top: 1.5rem;">
+          <button class="btn btn-secondary" data-close="payment-success-modal">Close</button>
+          <button class="btn btn-primary" id="btn-view-official-receipt">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            </svg>
+            Download Receipt
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 5. Official Printable Receipt Modal -->
+  <div id="receipt-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width: 680px;" id="printable-receipt-modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Official University Fee Receipt</h3>
+        <button class="modal-close-btn" data-close="receipt-modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body" id="official-receipt-render">
+        <!-- Rendered official receipt -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-close="receipt-modal">Close</button>
+        <button class="btn btn-primary" id="btn-print-receipt-action">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect width="12" height="8" x="6" y="14"></rect>
+          </svg>
+          Print / Save PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 6. Edit Profile Modal -->
+  <div id="edit-profile-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit Student Profile</h3>
+        <button class="modal-close-btn" data-close="edit-profile-modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <form id="edit-profile-form">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group col-span-2">
+              <label class="form-label">Full Name</label>
+              <input type="text" id="edit-prof-name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" id="edit-prof-email" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input type="tel" id="edit-prof-phone" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Department</label>
+              <select id="edit-prof-dept">
+                <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                <option value="AI & Data Science">AI & Data Science</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Electronics & Communication">Electronics & Communication</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Semester</label>
+              <select id="edit-prof-sem">
+                <option value="3rd Semester">3rd Semester</option>
+                <option value="4th Semester">4th Semester</option>
+                <option value="5th Semester">5th Semester</option>
+                <option value="6th Semester">6th Semester</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close="edit-profile-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- 7. Write Student Review Modal -->
+  <div id="write-review-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width: 560px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.65rem;">
+          <span style="font-size: 1.25rem;">⭐</span>
+          <h3 class="modal-title">Write a Course Review</h3>
+        </div>
+        <button class="modal-close-btn" data-close="write-review-modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <form id="write-review-form">
+        <div class="modal-body">
+          <div class="form-group" style="margin-bottom: 1.25rem;">
+            <label class="form-label">Select Course</label>
+            <select id="review-course-select" class="filter-select" style="width: 100%;" required>
+              <!-- Dynamically populated with courses -->
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.25rem;">
+            <label class="form-label">Overall Rating</label>
+            <div class="star-picker-container" id="review-star-picker" data-rating="5">
+              <span class="star-pick-item active" data-val="1">★</span>
+              <span class="star-pick-item active" data-val="2">★</span>
+              <span class="star-pick-item active" data-val="3">★</span>
+              <span class="star-pick-item active" data-val="4">★</span>
+              <span class="star-pick-item active" data-val="5">★</span>
+              <span style="font-size: 0.92rem; font-weight: 700; color: #f59e0b; margin-left: 0.5rem;" id="star-picker-label">5.0 - Outstanding</span>
+            </div>
+            <input type="hidden" id="review-rating-value" value="5" />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+            <div class="form-group">
+              <label class="form-label">Course Difficulty</label>
+              <select id="review-difficulty" required>
+                <option value="Beginner-Friendly">Beginner-Friendly</option>
+                <option value="Moderate" selected>Moderate</option>
+                <option value="Challenging">Challenging / Intense</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Instructor Effectiveness</label>
+              <select id="review-instructor-rating" required>
+                <option value="5" selected>5/5 - Outstanding</option>
+                <option value="4">4/5 - Very Good</option>
+                <option value="3">3/5 - Average</option>
+                <option value="2">2/5 - Needs Work</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.25rem;">
+            <label class="form-label">Your Honest Review & Tips for Juniors</label>
+            <textarea id="review-comment" rows="4" placeholder="How were the labs, assignments, and exam difficulty? Any tips on prerequisites or syllabus modules?" required minlength="15"></textarea>
+          </div>
+
+          <label class="checkbox-label">
+            <input type="checkbox" id="review-anonymous" />
+            <span>Post as Verified Anonymous Student</span>
+          </label>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close="write-review-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-review">
+            Submit Verified Review
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- =========================================================================
+       MODAL: ACADEMIC MOCK TEST RUNNER
+       ========================================================================= -->
+  <div id="mock-test-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card modal-card-wide" style="max-width: 860px;" id="mock-test-modal-card">
+      
+      <!-- Phase 1: Test Briefing & Instructions -->
+      <div id="test-briefing-view">
+        <div class="modal-header">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div class="stat-icon-wrap amber" style="width: 42px; height: 42px;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="8" r="6"/>
+                <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="modal-title" id="briefing-course-title">AI & Machine Learning Assessment</h3>
+              <span style="font-size: 0.82rem; color: var(--text-muted);" id="briefing-course-code">AIML301 • 4 Academic Credits</span>
+            </div>
+          </div>
+          <button class="modal-close-btn" data-close="mock-test-modal" title="Close">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="modal-body" style="padding: 1.5rem;">
+          <div class="test-briefing-box">
+            <div class="test-briefing-hero">
+              <h4>Official Examination Instructions</h4>
+              <p id="briefing-test-description">
+                This comprehensive assessment validates conceptual knowledge, algorithmic derivation, and engineering practices required for course mastery.
+              </p>
+            </div>
+
+            <div class="test-rules-grid">
+              <div class="test-rule-item">
+                <div class="test-rule-icon">⏱️</div>
+                <div>
+                  <strong>10 Minutes Duration</strong>
+                  <span>Timer runs continuously. Test auto-submits when time expires.</span>
+                </div>
+              </div>
+              <div class="test-rule-item">
+                <div class="test-rule-icon">📝</div>
+                <div>
+                  <strong>5 Technical Questions</strong>
+                  <span>Multiple-choice questions with 4 options and 1 correct answer.</span>
+                </div>
+              </div>
+              <div class="test-rule-item">
+                <div class="test-rule-icon">🎯</div>
+                <div>
+                  <strong>70% Passing Threshold</strong>
+                  <span>Score at least 70% to complete the course and unlock your certificate.</span>
+                </div>
+              </div>
+              <div class="test-rule-item">
+                <div class="test-rule-icon">🎓</div>
+                <div>
+                  <strong>Verifiable Certificate</strong>
+                  <span>Passing automatically generates an official, verifiable academic diploma.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="test-notice-pill">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>You can flag questions to revisit later, jump between questions via the question palette, and retake the exam anytime.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer" style="display: flex; justify-content: space-between;">
+          <button type="button" class="btn btn-secondary" data-close="mock-test-modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="btn-start-exam-now">
+            Start Examination Now →
+          </button>
+        </div>
+      </div>
+
+      <!-- Phase 2: Active Exam Runner -->
+      <div id="test-active-view" class="hidden">
+        <div class="modal-header" style="padding-bottom: 0.75rem;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="course-code-tag" id="active-test-code">AIML301</span>
+              <h3 class="modal-title" style="font-size: 1.15rem;" id="active-test-title">AI & Machine Learning</h3>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <!-- Countdown Timer Pill -->
+            <div class="test-timer-badge" id="test-timer-pill">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 14 14"></polyline>
+              </svg>
+              <span id="test-timer-countdown">10:00</span>
+            </div>
+            <button class="modal-close-btn" id="btn-quit-test" title="Exit Test">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Progress Track & Palette -->
+        <div class="test-progress-strip">
+          <div class="test-progress-meta">
+            <span id="test-question-indicator">Question 1 of 5</span>
+            <span id="test-progress-percentage">20% Completed</span>
+          </div>
+          <div class="progress-track" style="height: 6px;">
+            <div class="progress-fill" id="test-progress-bar" style="width: 20%;"></div>
+          </div>
+        </div>
+
+        <!-- Question Jump Palette Pills -->
+        <div class="test-palette-container" id="test-palette-container">
+          <!-- Question 1, 2, 3, 4, 5 buttons -->
+        </div>
+
+        <div class="modal-body" style="padding: 1.25rem 1.75rem;">
+          <div id="test-question-container">
+            <!-- Dynamic Question Card -->
+          </div>
+        </div>
+
+        <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+          <button type="button" class="btn btn-outline btn-sm" id="btn-flag-question">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span id="flag-btn-text">Flag for Review</span>
+          </button>
+
+          <div style="display: flex; gap: 0.75rem;">
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-prev-question" disabled>
+              ← Previous
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" id="btn-next-question">
+              Next →
+            </button>
+            <button type="button" class="btn btn-emerald btn-sm hidden" id="btn-submit-exam-final">
+              Submit Examination ✓
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 3: Results & Pedagogical Review Screen -->
+      <div id="test-results-view" class="hidden">
+        <div class="modal-header">
+          <h3 class="modal-title">Examination Evaluation Report</h3>
+          <button class="modal-close-btn" data-close="mock-test-modal" title="Close">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="modal-body" style="padding: 1.5rem;">
+          <div id="test-score-banner" class="test-score-hero">
+            <!-- Dynamically populated with celebration / score ring -->
+          </div>
+
+          <h4 style="margin: 1.5rem 0 0.75rem; font-size: 1rem; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
+            <span>Question-by-Question Detailed Solutions & Rationales</span>
+          </h4>
+          <div id="test-solutions-review" class="test-solutions-list">
+            <!-- Review items -->
+          </div>
+        </div>
+
+        <div class="modal-footer" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+          <button type="button" class="btn btn-secondary" id="btn-retake-exam">
+            🔄 Retake Test
+          </button>
+          <div style="display: flex; gap: 0.75rem;">
+            <button type="button" class="btn btn-outline" data-close="mock-test-modal">Close</button>
+            <button type="button" class="btn btn-primary hidden" id="btn-view-certificate-from-result">
+              🎓 View & Download Certificate
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- =========================================================================
+       MODAL: OFFICIAL ACADEMIC CERTIFICATE OF COMPLETION
+       ========================================================================= -->
+  <div id="certificate-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card certificate-modal-card" style="max-width: 960px;">
+      
+      <!-- Modal Action Bar -->
+      <div class="modal-header cert-modal-header" style="padding: 0.85rem 1.25rem;">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="display: inline-flex; padding: 0.35rem; background: rgba(245, 158, 11, 0.15); border-radius: 6px; color: #d97706;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="6"/>
+              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+            </svg>
+          </span>
+          <div>
+            <h3 class="modal-title" style="font-size: 1.1rem;">Official Course Certificate</h3>
+            <span style="font-size: 0.75rem; color: var(--text-muted);" id="cert-header-meta">CourseHub University Credential</span>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <button type="button" class="btn btn-sm btn-outline" id="btn-copy-cert-id" title="Copy Verification Link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+            </svg>
+            <span>Copy Link</span>
+          </button>
+          <button type="button" class="btn btn-sm btn-outline" id="btn-print-certificate" title="Print or Save as PDF">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 6 2 18 2 18 9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+              <rect width="12" height="8" x="6" y="14"></rect>
+            </svg>
+            <span>Print / PDF</span>
+          </button>
+          <button type="button" class="btn btn-sm btn-primary" id="btn-download-cert-png" title="Download High-Definition PNG">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>Download PNG</span>
+          </button>
+          <button class="modal-close-btn" data-close="certificate-modal" title="Close">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Printable & Downloadable Certificate Frame -->
+      <div class="modal-body cert-modal-body" style="padding: 1rem; overflow-x: auto; display: flex; justify-content: center;">
+        <div id="printable-certificate" class="academic-certificate-sheet">
+          
+          <!-- Outer Double Border & Guilloche Frame -->
+          <div class="cert-outer-border">
+            <div class="cert-inner-border">
+              
+              <!-- Corner Ornaments (SVG) -->
+              <div class="cert-corner top-left">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                  <path d="M0 0 L40 0 C20 0 0 20 0 40 Z" fill="#d4af37" opacity="0.3"/>
+                  <path d="M4 4 L30 4 C15 4 4 15 4 30 Z" fill="#d4af37" opacity="0.7"/>
+                  <circle cx="8" cy="8" r="3" fill="#b45309"/>
+                </svg>
+              </div>
+              <div class="cert-corner top-right">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                  <path d="M40 0 L0 0 C20 0 40 20 40 40 Z" fill="#d4af37" opacity="0.3"/>
+                  <path d="M36 4 L10 4 C25 4 36 15 36 30 Z" fill="#d4af37" opacity="0.7"/>
+                  <circle cx="32" cy="8" r="3" fill="#b45309"/>
+                </svg>
+              </div>
+              <div class="cert-corner bottom-left">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                  <path d="M0 40 L40 40 C20 40 0 20 0 0 Z" fill="#d4af37" opacity="0.3"/>
+                  <path d="M4 36 L30 36 C15 36 4 25 4 10 Z" fill="#d4af37" opacity="0.7"/>
+                  <circle cx="8" cy="32" r="3" fill="#b45309"/>
+                </svg>
+              </div>
+              <div class="cert-corner bottom-right">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                  <path d="M40 40 L0 40 C20 40 40 20 40 0 Z" fill="#d4af37" opacity="0.3"/>
+                  <path d="M36 36 L10 36 C25 36 36 25 36 10 Z" fill="#d4af37" opacity="0.7"/>
+                  <circle cx="32" cy="32" r="3" fill="#b45309"/>
+                </svg>
+              </div>
+
+              <!-- Watermark University Emblem -->
+              <div class="cert-watermark">
+                <svg width="340" height="340" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+              </div>
+
+              <!-- Certificate Header -->
+              <div class="cert-header">
+                <div class="cert-institution-badge">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                  </svg>
+                </div>
+                <div class="cert-institution-name">COURSEHUB UNIVERSITY</div>
+                <div class="cert-institution-sub">INSTITUTE OF TECHNOLOGY & ADVANCED SCIENCE</div>
+                <div class="cert-divider-line">
+                  <span>★ ★ ★</span>
+                </div>
+                <div class="cert-main-title">CERTIFICATE OF COMPLETION</div>
+                <div class="cert-proclamation">This is to officially certify that</div>
+              </div>
+
+              <!-- Recipient Info -->
+              <div class="cert-body">
+                <div class="cert-recipient-name" id="cert-student-name">Alex Vance</div>
+                <div class="cert-recipient-meta">
+                  Roll No: <strong id="cert-student-roll">CS24B1042</strong> • Department of <span id="cert-student-dept">Computer Science & Engineering</span>
+                </div>
+
+                <div class="cert-statement">
+                  has fulfilled all academic requirements, laboratory practicums, and successfully passed the comprehensive evaluation for
+                </div>
+
+                <div class="cert-course-badge-wrap">
+                  <div class="cert-course-title" id="cert-course-title">AI & Machine Learning</div>
+                  <div class="cert-course-meta">
+                    Course Code: <strong id="cert-course-code">AIML301</strong> • Credits: <strong id="cert-course-credits">4 Credits</strong> • Final Grade: <span class="cert-grade-tag" id="cert-course-grade">A+ (96%)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Footer: Signatures, Seal, Verification ID -->
+              <div class="cert-footer">
+                
+                <!-- Left Signature: Instructor / Department Chair -->
+                <div class="cert-signature-block">
+                  <div class="cert-signature-script" id="cert-sig-instructor">Dr. Priya Sharma</div>
+                  <div class="cert-sig-line"></div>
+                  <div class="cert-sig-name" id="cert-name-instructor">Dr. Priya Sharma</div>
+                  <div class="cert-sig-title" id="cert-title-instructor">Professor & Department Chair</div>
+                </div>
+
+                <!-- Center: Official 3D Gold Ribbon Seal -->
+                <div class="cert-seal-block">
+                  <div class="cert-gold-seal">
+                    <svg width="68" height="68" viewBox="0 0 100 100">
+                      <!-- Ribbon Tails -->
+                      <polygon points="25,75 15,100 35,92 50,100 50,75" fill="#92400e"/>
+                      <polygon points="75,75 85,100 65,92 50,100 50,75" fill="#78350f"/>
+                      <!-- Outer Scalloped Circle -->
+                      <circle cx="50" cy="45" r="38" fill="url(#goldGrad)" stroke="#b45309" stroke-width="2"/>
+                      <!-- Inner Ring -->
+                      <circle cx="50" cy="45" r="30" fill="none" stroke="#fef3c7" stroke-width="1.5" stroke-dasharray="3,2"/>
+                      <!-- Center Star -->
+                      <polygon points="50,26 53,35 62,35 55,41 58,50 50,44 42,50 45,41 38,35 47,35" fill="#fef3c7"/>
+                      <defs>
+                        <radialGradient id="goldGrad" cx="40%" cy="40%" r="60%">
+                          <stop offset="0%" stop-color="#fbbf24"/>
+                          <stop offset="60%" stop-color="#d97706"/>
+                          <stop offset="100%" stop-color="#b45309"/>
+                        </radialGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                  <div class="cert-seal-text">OFFICIAL SEAL</div>
+                </div>
+
+                <!-- Right Signature: Academic Dean / Registrar -->
+                <div class="cert-signature-block">
+                  <div class="cert-signature-script" id="cert-sig-dean">Dr. Arvind Subramanian</div>
+                  <div class="cert-sig-line"></div>
+                  <div class="cert-sig-name" id="cert-name-registrar">Dr. Arvind Subramanian</div>
+                  <div class="cert-sig-title">Academic Dean & Registrar</div>
+                </div>
+
+              </div>
+
+              <!-- Certificate Verification Bar -->
+              <div class="cert-verification-strip">
+                <div>Issue Date: <strong id="cert-issue-date">18 May 2024</strong></div>
+                <div>Credential ID: <strong id="cert-credential-id">CHU-CERT-2024-AIML301-8842</strong></div>
+                <div>Status: <strong style="color: #059669;">✓ Verified & Active</strong></div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="modal-footer" style="display: flex; justify-content: space-between;">
+        <span style="font-size: 0.8rem; color: var(--text-muted);">
+          Cryptographically signed digital credential issued by CourseHub University Academic Council.
+        </span>
+        <button type="button" class="btn btn-secondary" data-close="certificate-modal">Close Window</button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Application Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ai-assistant.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
+
